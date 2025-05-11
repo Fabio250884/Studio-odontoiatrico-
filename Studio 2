@@ -1,0 +1,91 @@
+import { Card, CardContent } from "@/components/ui/card"; import { Button } from "@/components/ui/button"; import { MapPin, Phone, Mail, Image } from "lucide-react"; import { useState } from "react"; import emailjs from "emailjs-com";
+
+const SERVICE_ID = "your_service_id"; const TEMPLATE_ID = "your_template_id"; const PUBLIC_KEY = "your_public_key";
+
+export default function StudioOdontotecnico() { const [formData, setFormData] = useState({ nome: '', email: '', messaggio: '' });
+
+const handleChange = (e) => { setFormData({ ...formData, [e.target.name]: e.target.value }); };
+
+const handleSubmit = (e) => { e.preventDefault();
+
+emailjs.send(SERVICE_ID, TEMPLATE_ID, formData, PUBLIC_KEY)
+  .then(() => {
+    alert('Messaggio inviato con successo!');
+    setFormData({ nome: '', email: '', messaggio: '' });
+  })
+  .catch((error) => {
+    console.error('Errore invio email:', error);
+    alert('Si è verificato un errore. Riprova.');
+  });
+
+};
+
+return ( <div className="min-h-screen bg-white text-gray-800"> {/* Header */} <header className="bg-blue-700 text-white p-6 shadow-md"> <div className="max-w-6xl mx-auto flex justify-between items-center"> <h1 className="text-2xl font-bold">Studio Odontotecnico Rossi</h1> <nav className="space-x-6"> <a href="#chi-siamo" className="hover:underline">Chi Siamo</a> <a href="#servizi" className="hover:underline">Servizi</a> <a href="#gallery" className="hover:underline">Gallery</a> <a href="#contatti" className="hover:underline">Contatti</a> </nav> </div> </header>
+
+{/* Hero */}
+  <section className="bg-blue-100 py-20 text-center">
+    <h2 className="text-4xl font-bold mb-4">Precisione e Innovazione per il tuo Sorriso</h2>
+    <p className="text-xl text-gray-700">Tecnologie all'avanguardia per protesi dentarie di alta qualità</p>
+  </section>
+
+  {/* Chi Siamo */}
+  <section id="chi-siamo" className="max-w-4xl mx-auto px-4 py-16">
+    <h3 className="text-3xl font-semibold mb-6">Chi Siamo</h3>
+    <p className="text-lg text-gray-600">
+      Lo Studio Odontotecnico Rossi è attivo dal 1998, specializzato nella realizzazione di protesi fisse, mobili e su impianti. Uniamo artigianato e tecnologia per garantire risultati precisi e personalizzati.
+    </p>
+  </section>
+
+  {/* Servizi */}
+  <section id="servizi" className="bg-gray-100 py-16 px-4">
+    <div className="max-w-6xl mx-auto">
+      <h3 className="text-3xl font-semibold mb-10 text-center">I Nostri Servizi</h3>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {['Protesi Fisse', 'Protesi Mobili', 'CAD/CAM', 'Riparazioni', 'Protesi su Impianti', 'Scanner Intraorale'].map((servizio) => (
+          <Card key={servizio} className="shadow-md">
+            <CardContent className="p-6">
+              <h4 className="text-xl font-semibold mb-2">{servizio}</h4>
+              <p className="text-gray-600">Descrizione breve del servizio offerto. Qualità, precisione e attenzione al dettaglio.</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Gallery */}
+  <section id="gallery" className="max-w-6xl mx-auto px-4 py-16">
+    <h3 className="text-3xl font-semibold mb-10 text-center">Gallery</h3>
+    <div className="grid md:grid-cols-3 gap-4">
+      {[1, 2, 3, 4, 5, 6].map((img) => (
+        <div key={img} className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+          <Image className="w-8 h-8 text-gray-400" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  {/* Contatti */}
+  <section id="contatti" className="max-w-4xl mx-auto px-4 py-16">
+    <h3 className="text-3xl font-semibold mb-6">Contatti</h3>
+    <div className="space-y-4 text-gray-700 mb-10">
+      <p className="flex items-center gap-2"><MapPin /> Via dei Dentisti 12, Milano</p>
+      <p className="flex items-center gap-2"><Phone /> 02 1234 5678</p>
+      <p className="flex items-center gap-2"><Mail /> info@studio-rossi.it</p>
+    </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input name="nome" type="text" placeholder="Nome" value={formData.nome} onChange={handleChange} required className="w-full p-2 border rounded" />
+      <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required className="w-full p-2 border rounded" />
+      <textarea name="messaggio" rows="4" placeholder="Messaggio" value={formData.messaggio} onChange={handleChange} required className="w-full p-2 border rounded" />
+      <Button type="submit">Invia Messaggio</Button>
+    </form>
+  </section>
+
+  {/* Footer */}
+  <footer className="bg-blue-700 text-white text-center py-4">
+    <p>&copy; 2025 Studio Odontotecnico Rossi. Tutti i diritti riservati.</p>
+  </footer>
+</div>
+
+); }
+
