@@ -1,0 +1,5 @@
+git init
+git remote add origin https://github.com/tuo-username/studio-odontotecnico.git
+git add .
+git commit -m "Prima versione"
+git push -u origin master
